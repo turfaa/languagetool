@@ -64,6 +64,16 @@ class LanguageTool(HTTPRequest):
             return 'Error'
 
 
+def removeMatches(str1, str2):
+    if (str1.find(str2)==-1):
+        return str1
+    else:
+        fi = str1.find(str2)
+        sc = str1.find(str2, fi+len(str2))
+        str1 = str1[:fi] + str1[(sc+len(str2)):]
+        return removeMatches(str1,str2)
+
+
 if __name__ == '__main__':
     print('https://languagetool.org/ API Consumer')
     print('Author : Turfa Auliarachman')
@@ -94,21 +104,26 @@ if __name__ == '__main__':
                 return
 
             if (os.path.splitext(sys.argv[3])[1]=='.md'):
+                text = removeMatches(text, '```')
+                text = removeMatches(text, '$')
                 text = strip_tags(markdown2.markdown(text))
 
             for err in LTool.check(sys.argv[2], text)['matches']:
-                if (len(err['replacements'])>0):
-                    print(err['message'])
+                if ((len(err['replacements'])>0) & (err['rule']['issueType']!='whitespace')):
+                    if((err['replacements'][0]['value'] != '“') & (err['replacements'][0]['value']!='”')):
+                        print(err['replacements'][0]['value'])
+                        print(err['message'])
 
-                    print('Replacements :')
-                    print(err['replacements'])
+                        print('Replacements :')
+                        print(err['replacements'])
 
-                    print('Context :')
-                    print(err['context'])
+                        print('Context :')
+                        print(err['context'])
 
-                    print()
-                    print()
-                    print()
+                        print()
+                        print()
+                        print()
+
 
 
     if (len(sys.argv)==1):
