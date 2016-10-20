@@ -111,7 +111,6 @@ if __name__ == '__main__':
             for err in LTool.check(sys.argv[2], text)['matches']:
                 if ((len(err['replacements'])>0) & (err['rule']['issueType']!='whitespace')):
                     if((err['replacements'][0]['value'] != '“') & (err['replacements'][0]['value']!='”')):
-                        print(err['replacements'][0]['value'])
                         print(err['message'])
 
                         print('Replacements :')
