@@ -57,7 +57,11 @@ class LanguageTool(HTTPRequest):
 
     def check(self, language, text):
         data = {'language' : language, 'text' : text};
-        return json.loads(self.POST('check', data).decode('utf8'))
+
+        try:
+            return json.loads(self.POST('check', data).decode('utf8'))
+        except:
+            return 'Error'
 
 
 if __name__ == '__main__':
@@ -87,6 +91,7 @@ if __name__ == '__main__':
                 text = open(sys.argv[3]).read()
             except:
                 print("Error opening file")
+                return
 
             if (os.path.splitext(sys.argv[3])[1]=='.md'):
                 text = strip_tags(markdown2.markdown(text))
