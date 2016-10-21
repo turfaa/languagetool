@@ -17,5 +17,5 @@ This is the https://languagetool.org/ API consumer. I added some hacks in the ch
 import langTool
 LT = langTool.LanguageTool()
 LT.getLanguages()
-LT.check(language-code, path-to-file)
+LT.check(language-code, text)
 ```
