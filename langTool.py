@@ -64,16 +64,6 @@ class LanguageTool(HTTPRequest):
             return 'Error'
 
 
-def removeMatches(str1, str2):
-    if (str1.find(str2)==-1):
-        return str1
-    else:
-        fi = str1.find(str2)
-        sc = str1.find(str2, fi+len(str2))
-        str1 = str1[:fi] + str1[(sc+len(str2)):]
-        return removeMatches(str1,str2)
-
-
 if __name__ == '__main__':
     print('https://languagetool.org/ API Consumer')
     print('Author : Turfa Auliarachman')
@@ -82,6 +72,18 @@ if __name__ == '__main__':
     print()
 
     LTool = LanguageTool()
+
+    def removeMatches(str1, str2):
+        if (str1.find(str2)==-1):
+            return str1
+        else:
+            fi = str1.find(str2)
+            sc = str1.find(str2, fi+len(str2))
+            str1 = str1[:fi] + str1[(sc+len(str2)):]
+            return removeMatches(str1,str2)
+
+    def hack(str):
+        return ((str != '“') & (str != '”') & (str.split()[0] != 'sub'));
 
     def usage():
         print("Usage : {} languages\n".format(str(sys.argv[0])))
@@ -110,7 +112,7 @@ if __name__ == '__main__':
 
             for err in LTool.check(sys.argv[2], text)['matches']:
                 if ((len(err['replacements'])>0) & (err['rule']['issueType']!='whitespace')):
-                    if((err['replacements'][0]['value'] != '“') & (err['replacements'][0]['value']!='”')):
+                    if(hack(err['replacements'][0]['value'])):
                         print(err['message'])
 
                         print('Replacements :')
