@@ -83,6 +83,17 @@ if __name__ == '__main__':
             str1 = str1[:fi] + str1[(sc+len(str2)):]
             return removeMatches(str1,str2)
 
+    def removeLatex(str):
+        str = str.split()
+
+        for i in range(len(str)):
+            if ((str[i].find('\\')!=-1) | (str[i].find('{')!=-1)):
+                str[i] = ''
+
+        ret = [st+' ' for st in str if st != '']
+
+        return ''.join(ret)
+
     def hack(str):
         return ((str != '“') & (str != '”') & (str.split()[0] != 'sub'));
 
@@ -112,8 +123,10 @@ if __name__ == '__main__':
 
             if (os.path.splitext(sys.argv[3])[1]=='.md'):
                 text = removeMatches(text, '```')
+                text = removeMatches(text, '$$')
                 text = removeMatches(text, '$')
                 text = strip_tags(markdown2.markdown(text))
+                text = removeLatex(text)
 
             for err in LTool.check(sys.argv[2], text)['matches']:
                 if ((len(err['replacements'])>0) & (err['rule']['issueType']!='whitespace')):
