@@ -88,7 +88,7 @@ if __name__ == '__main__':
 
     def usage():
         print("Usage : {} languages\n".format(str(sys.argv[0])))
-        print("Usage : {} check <language> <filename>\n".format(str(sys.argv[0])))
+        print("Usage : {} check <language> <filename> [encoding]\n".format(str(sys.argv[0])))
 
     def languages():
         for element in LTool.getLanguages():
