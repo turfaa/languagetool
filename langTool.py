@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# coding: utf8
 
 # Author :   Turfa Auliarachman
 # Date   :   October 20, 2016
@@ -94,15 +95,19 @@ if __name__ == '__main__':
             print('Language : "{}", Code : "{}"'.format(element['name'], element['longCode']))
 
     def check():
-        if (len(sys.argv)!=4):
+        if (len(sys.argv)<4):
             usage()
         else:
-            text = ""
+            text = ''
 
+            if (len(sys.argv)==4):
+                enc = 'utf8'
+            else:
+                enc = sys.argv[4]
             try:
-                text = open(sys.argv[3]).read()
+                text = open(sys.argv[3], encoding=enc).read()
             except:
-                print("Error opening file")
+                print('Error opening file')
                 return
 
             if (os.path.splitext(sys.argv[3])[1]=='.md'):

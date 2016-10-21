@@ -9,7 +9,7 @@ This is the https://languagetool.org/ API consumer. I added some hacks in the ch
 
 ### Check A Text File
 ```
-./langTool.py check <language-code> <path-to-file>
+./langTool.py check <language-code> <path-to-file> [encoding]
 ```
 
 ### Importing
